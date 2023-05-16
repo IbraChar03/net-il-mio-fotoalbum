@@ -1,11 +1,17 @@
-﻿@model List<Photo>
+﻿@model Filter
 
 <div class="scroll">
+    <div class="cont-create mb-3">
+        <form asp-controller="Home" asp-action="FilterTitle" method="post">
+            <input asp-for="Value" class="d-block w-100" />
+            <input type="submit" value="Search" />
+        </form>
+    </div>
  <div class="cont-det">
 
     <div class="inner-cont2">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            @foreach (var photo in Model)
+            @foreach (var photo in Model.Photos)
             {
                 <div class="col">
                 <div class="card">
