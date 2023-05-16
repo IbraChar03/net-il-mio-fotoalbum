@@ -12,7 +12,7 @@
                 <h4 class="card-title">@photo.Title</h4>
                 <p class="card-text">@photo.Description</p>
                     <a href="@Url.Action("Edit", "Home",new{id = photo.Id})" class="btn btn-primary">Edit Photo</a>
-                    <a href="@Url.Action("Delete", "Home")" class="btn btn-primary">Delete Photo</a>
+                    <a href="@Url.Action("Delete", "Home",new{id = photo.Id})" class="btn btn-primary">Delete Photo</a>
             </div>
         </div>
     }

@@ -156,6 +156,22 @@ namespace net_il_mio_fotoalbum.Controllers
             }
 
         }
+        public IActionResult Delete(int id)
+        {
+            using(AlbumContext ctx = new AlbumContext())
+            {
+                Photo photo = ctx.Photos.Where(p => p.Id == id).FirstOrDefault();
+                if(photo != null)
+                {
+                    ctx.Photos.Remove(photo);
+                    ctx.SaveChanges();
+                    return RedirectToAction("Admin");
+                }
+                return RedirectToAction("Admin");
+
+            }
+            
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
