@@ -54,6 +54,18 @@ namespace net_il_mio_fotoalbum.Controllers
             }
 
         }
+        public IActionResult SendMessage(Filter data)
+        {
+            using (AlbumContext ctx = new AlbumContext())
+            {
+                Message mess = new Message();
+                mess.Email = data.Message.Email;
+                mess.Text = data.Message.Text;
+                ctx.Messages.Add(mess);
+                ctx.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
 
         public IActionResult Privacy()
         {
