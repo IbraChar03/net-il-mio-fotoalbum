@@ -1,0 +1,49 @@
+﻿@*@model List<Photo>*@
+
+<h2>Administrator Page</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">1</div>
+        </div>
+        <div class="col-4">
+            <div class="card">1</div>
+        </div>
+        <div class="col-4">
+            <div class="card">1</div>
+        </div>
+    </div>
+</div>
+<div class='row card-group'>
+    @foreach(var photo in Model)
+    {
+        
+    <div class="col-4">
+        <div class="card h-100">
+            <embed src="@photo.Image"
+                   class="card-img-top"
+                   alt="..." />
+            <div class="card-body">
+                <h5 class="card-title">@photo.Title</h5>
+             <h4 class="font-weight-bold blue-text">
+                    <strong>
+                        {% if item.discount_price %}
+                        <small><span class="badge badge-pill danger-color">Discount was <del>${{ item.price }}</del></span></small>
+                        <br>
+                        Now ${{ item.discount_price }}
+                        {% else %}
+                        ${{ item.price}}
+                        {% endif %}
+                    </strong>
+                </h4>
+            <p class="card-text">
+                   @photo.Description
+                </p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+        </div>
+    </div>
+    }
+</div>

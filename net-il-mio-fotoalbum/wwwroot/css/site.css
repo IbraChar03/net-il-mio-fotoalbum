@@ -16,3 +16,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+.img-card{
+    height: 400px;
+    width: 100%;
+    object-fit:cover;
+}

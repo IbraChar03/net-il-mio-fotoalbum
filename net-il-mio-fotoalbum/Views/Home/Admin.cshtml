@@ -1,0 +1,20 @@
+﻿@model List<Photo>
+
+<h2>Administrator Page</h2>
+<a href="@Url.Action("Create", "Home")" class="btn btn-primary">Create a new Photo</a>
+<div class="container">
+    <div class="row">
+         @foreach (var photo in Model)
+    {
+        <div class="card" style="width:400px">
+            <img class="img-card" src="@photo.Image" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">@photo.Title</h4>
+                <p class="card-text">@photo.Description</p>
+                    <a href="@Url.Action("Edit", "Home")" class="btn btn-primary">Edit Photo</a>
+                    <a href="@Url.Action("Edit", "Home")" class="btn btn-primary">Delete Photo</a>
+            </div>
+        </div>
+    }
+    </div>
+</div>

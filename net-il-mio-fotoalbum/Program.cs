@@ -14,7 +14,7 @@ namespace net_il_mio_fotoalbum
                 //options.UseSqlServer(connectionString));
             builder.Services.AddDbContext<AlbumContext>();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AlbumContext>();
 
             // Add services to the container.
