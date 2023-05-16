@@ -1,11 +1,17 @@
 ﻿@model Filter
 
 <div class="scroll">
-    <div class="cont-create mb-3">
-        <form asp-controller="Home" asp-action="FilterTitle" method="post">
-            <input asp-for="Value" class="d-block w-100" />
-            <input type="submit" value="Search" />
+    <div class="filter mb-3 mt-3">
+        <div class="con-filt">
+        <form asp-controller="Home" asp-action="FilterTitle" method="post" class="form-inline">
+            <div class="form-group mx-sm-3 mb-2 d-flex">
+                <input type="text" asp-for="Value" class="form-control d-flex me-3" id="inputPassword2" placeholder="Search..">
+                    <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+           
+   
         </form>
+    </div>
     </div>
  <div class="cont-det">
 
