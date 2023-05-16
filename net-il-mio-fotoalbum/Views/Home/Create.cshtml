@@ -22,27 +22,29 @@
         </div>
     
         <div class="mb-3">
-            <label>Ingredients : </label>
+            <label>Category : </label>
             <select asp-for="SelectedCategories" multiple="multiple" asp-items="Model.Categories" size="10"
                     class="form-control mb-2 mr-sm-2 ml-sm-3 leftList">
             </select>
             <span asp-validation-for="SelectedCategories" class="text-danger"></span>
 
         </div>
+        <div class="mb-3">
+            <label>Visibility : </label>
+            <select asp-for="Photo.Visible" rows="10" class="d-block w-100">
+
+                <option value=True>Visible</option>
+                <option value=False>Hidden</option>
+
+
+            </select>
+            <span asp-validation-for="Photo.Visible" class="text-danger"></span>
+
+        </div>
         <div class="text-end">
             <input type="submit" class="btn btn-small btn-info" value="Create">
         </div>
       
-        <div class="mb-3">
-            <label>Visibility : </label>
-            <select asp-for="Photo.Visible" rows="10" class="d-block w-100">
-              
-                    <option value="True">Visible</option>
-                <option value="False">Hidden</option>
 
-                
-            </select>
-          
-        </div>
     </form>
 </div>

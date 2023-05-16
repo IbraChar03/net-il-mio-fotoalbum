@@ -56,6 +56,44 @@ namespace net_il_mio_fotoalbum.Controllers
             }
            
         }
+        [HttpPost]
+        public IActionResult Create(FormPhotoCategory form)
+        {
+            using (AlbumContext ctx = new AlbumContext())
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    
+                    var categoriesList = ctx.Categories.ToList();
+
+                    List<SelectListItem> listCategories = new List<SelectListItem>();
+                    foreach (Category cat in categoriesList)
+                    {
+                        listCategories.Add(new SelectListItem() { Text = cat.Name, Value = cat.Id.ToString() });
+                    }
+                    form.Categories = listCategories;
+                    return View(form);
+                }
+                Photo photo = new Photo();
+                photo.Image = form.Photo.Image;
+                photo.Title = form.Photo.Title;
+                photo.Description = form.Photo.Description;
+                photo.Visible = form.Photo.Visible;
+                photo.Categories = new List<Category>();
+                foreach(var categoryid in form.SelectedCategories)
+                {
+                    int intcategoryid = int.Parse(categoryid);
+                    var category = ctx.Categories.Where(c => c.Id == intcategoryid).FirstOrDefault();
+                    photo.Categories.Add(category);
+                }
+               
+                ctx.Photos.Add(photo);
+                ctx.SaveChanges();
+                return RedirectToAction("Admin");
+            }
+
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

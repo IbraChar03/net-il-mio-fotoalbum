@@ -10,8 +10,8 @@ namespace net_il_mio_fotoalbum.Models
         [Required] public string Title { get; set; }
         [Required] public string Description { get; set; }
         [Required] public string Image { get; set; }
-        public bool Visible { get; set; }
-        public List<Category> Categories { get; set; }
+        public bool? Visible { get; set; }
+        public List<Category>? Categories { get; set; }
         public List<Message>? Messages { get; set; }
     }
 }
