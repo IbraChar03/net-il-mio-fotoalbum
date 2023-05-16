@@ -1,20 +1,35 @@
 ﻿@model List<Photo>
+<div class="scroll">
+<div class="cont-create mb-3">
+    <a href="@Url.Action("Create", "Home")" class="btn btn-primary">Create a new Photo</a>
+</div>
+ <div class="cont-det">
 
-<h2>Administrator Page</h2>
-<a href="@Url.Action("Create", "Home")" class="btn btn-primary">Create a new Photo</a>
-<div class="container">
-    <div class="row">
-         @foreach (var photo in Model)
-    {
-        <div class="card" style="width:400px">
-            <img class="img-card" src="@photo.Image" alt="Card image">
-            <div class="card-body">
-                <h4 class="card-title">@photo.Title</h4>
-                <p class="card-text">@photo.Description</p>
-                    <a href="@Url.Action("Edit", "Home",new{id = photo.Id})" class="btn btn-primary">Edit Photo</a>
-                    <a href="@Url.Action("Delete", "Home",new{id = photo.Id})" class="btn btn-primary">Delete Photo</a>
+    <div class="inner-cont2">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var photo in Model)
+            {
+                <div class="col">
+                <div class="card">
+                        <img src="@photo.Image" class="img-t"
+                         alt="Hollywood Sign on The Hill" />
+                    <div class="card-body2">
+                            <h5 class="card-title">@photo.Title</h5>
+                        <p class="card-text">
+                                @photo.Description
+                        </p>
+                        <div class="cont-btn">
+                            <a href="@Url.Action("Edit", "Home",new{id = photo.Id})" class="btn btn-primary">Edit Photo</a>
+                            <a href="@Url.Action("Delete", "Home",new{id = photo.Id})" class="btn btn-primary">Delete Photo</a>
+                        </div>
+                    </div>
+                </div>
             </div>
+         
+            }
+            
         </div>
-    }
-    </div>
+  
+</div>
+</div>
 </div>

@@ -20,7 +20,23 @@ namespace net_il_mio_fotoalbum.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            using(AlbumContext ctx = new AlbumContext())
+            {
+                var photos = ctx.Photos.ToList();
+                return View(photos);
+
+            }
+            
+        }
+        public IActionResult Details(int id)
+        {
+            using (AlbumContext ctx = new AlbumContext())
+            {
+                var photo = ctx.Photos.Where(p => p.Id == id).FirstOrDefault();
+                return View(photo);
+
+            }
+
         }
 
         public IActionResult Privacy()

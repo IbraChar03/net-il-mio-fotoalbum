@@ -9,8 +9,6 @@ namespace net_il_mio_fotoalbum.Models
         [Key] public int Id { get; set; }
         [Required] public string Email { get; set; }
         [Required] public string Text { get; set; }
-        public int PhotoId { get; set; }
-        public Photo Photo { get; set; }
-
+       
     }
 }
