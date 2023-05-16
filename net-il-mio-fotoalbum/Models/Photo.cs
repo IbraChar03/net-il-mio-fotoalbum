@@ -10,7 +10,11 @@ namespace net_il_mio_fotoalbum.Models
         [Required] public string Title { get; set; }
         [Required] public string Description { get; set; }
         [Required] public string Image { get; set; }
+        [NotMapped] public IFormFile? Immagine { get; set; }
+        [NotMapped] public string ImageEntryBase64 => ImageEntry == null ? "" : "data:image/jpg;base64," + Convert.ToBase64String(ImageEntry.Data);
         public bool? Visible { get; set; }
         public List<Category>? Categories { get; set; }
+        public int? ImageEntryId { get; set; }
+        public ImageEntry? ImageEntry { get; set; }
     }
 }

@@ -6,6 +6,7 @@ namespace net_il_mio_fotoalbum.Models
 {
     public class AlbumContext : IdentityDbContext<IdentityUser>
     {
+        public DbSet<ImageEntry> ImageEntries { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Message> Messages { get; set; }

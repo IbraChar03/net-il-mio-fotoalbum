@@ -2,7 +2,7 @@
 
 <div class="container">
 
-    <form asp-controller="Home" asp-action="Edit" method="post" asp-route-id="@Model.Photo.Id" novalidate>
+    <form asp-controller="Home" asp-action="Edit" method="post" asp-route-id="@Model.Photo.Id" enctype="multipart/form-data" novalidate>
 
         <div class="mb-3">
             <label>Title : </label>
@@ -19,6 +19,11 @@
             <label>Image : </label>
             <input asp-for="Photo.Image" class="d-block w-100" />
             <span asp-validation-for="Photo.Image" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label>Immagine : </label>
+            <input type="file" asp-for="Photo.Immagine" class="d-block w-100" accept="image/*" />
+            @* <span asp-validation-for="Photo.Immagine" class="text-danger"></span>*@
         </div>
     
         <div class="mb-3">

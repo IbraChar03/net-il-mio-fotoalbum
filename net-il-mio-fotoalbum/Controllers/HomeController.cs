@@ -24,7 +24,7 @@ namespace net_il_mio_fotoalbum.Controllers
             {
                 Filter filt = new Filter();
 
-                var photos = ctx.Photos.Where( p => p.Visible == true).ToList();
+                var photos = ctx.Photos.Where( p => p.Visible == true).Include(p => p.ImageEntry).ToList();
                 filt.Photos = photos;
 
                 return View(filt);
@@ -76,7 +76,7 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             using (AlbumContext ctx = new AlbumContext())
             {
-                var photos = ctx.Photos.ToList();
+                var photos = ctx.Photos.Include(p => p.ImageEntry).ToList();
 
                 return View(photos);
             }
@@ -134,7 +134,23 @@ namespace net_il_mio_fotoalbum.Controllers
                     var category = ctx.Categories.Where(c => c.Id == intcategoryid).FirstOrDefault();
                     photo.Categories.Add(category);
                 }
-               
+                if(form.Photo.Immagine != null)
+                {
+                    using(var ms = new MemoryStream())
+                    {
+                        form.Photo.Immagine.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        var newImage = new ImageEntry()
+                        {
+                            Data = fileBytes
+                        };
+                        ctx.ImageEntries.Add(newImage);
+                        ctx.SaveChanges();
+                        photo.ImageEntryId = newImage.Id;
+                    }
+                    
+                }
+                
                 ctx.Photos.Add(photo);
                 ctx.SaveChanges();
                 return RedirectToAction("Admin");
@@ -193,6 +209,22 @@ namespace net_il_mio_fotoalbum.Controllers
                     int intcategoryid = int.Parse(categoryid);
                     var category = ctx.Categories.Where(c => c.Id == intcategoryid).FirstOrDefault();
                     pt.Categories.Add(category);
+                }
+                if (form.Photo.Immagine != null)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        form.Photo.Immagine.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        var newImage = new ImageEntry()
+                        {
+                            Data = fileBytes
+                        };
+                        ctx.ImageEntries.Add(newImage);
+                        ctx.SaveChanges();
+                        pt.ImageEntryId = newImage.Id;
+                    }
+
                 }
                 ctx.Photos.Update(pt);
                 ctx.SaveChanges();
