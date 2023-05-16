@@ -22,7 +22,7 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             using(AlbumContext ctx = new AlbumContext())
             {
-                var photos = ctx.Photos.ToList();
+                var photos = ctx.Photos.Where( p => p.Visible == true).ToList();
                 return View(photos);
 
             }
