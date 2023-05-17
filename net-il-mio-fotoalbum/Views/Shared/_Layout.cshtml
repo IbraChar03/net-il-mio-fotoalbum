@@ -36,7 +36,7 @@
                     {
                         <li class="nav-item">
                          @*   <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Admin">Administrator</a>*@
-                            <a href="@Url.Action("Admin", "Home",new{id = User.FindFirstValue(ClaimTypes.NameIdentifier)})" class="nav-link text-dark">Administrator</a>
+                            <a href="@Url.Action("Admin", "Home")" class="nav-link text-dark">Administrator</a>
                         </li>
                     }
                  

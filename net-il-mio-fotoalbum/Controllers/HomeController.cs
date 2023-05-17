@@ -73,23 +73,13 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             return View();
         }
-        //[Authorize(Roles ="Admin")]
-        //public IActionResult Admin()
-        //{
-        //    using (AlbumContext ctx = new AlbumContext())
-        //    {
-        //        var photos = ctx.Photos.Include(p => p.ImageEntry).ToList();
-
-        //        return View(photos);
-        //    }
-            
-            
-        //}
+     
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public IActionResult Admin(string id)
+        public IActionResult Admin()
         {
             using (AlbumContext ctx = new AlbumContext())
             {
+                string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 ApplicationUser user = ctx.ApplicationUsers.Where(a => a.Id == id).FirstOrDefault();
                 var photos = ctx.Photos.Where(p => p.ApplicationUserId == id).Include(p => p.ImageEntry).ToList();
 
