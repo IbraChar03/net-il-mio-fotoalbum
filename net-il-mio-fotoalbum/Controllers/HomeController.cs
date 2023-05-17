@@ -85,7 +85,7 @@ namespace net_il_mio_fotoalbum.Controllers
             
             
         //}
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Admin(string id)
         {
             using (AlbumContext ctx = new AlbumContext())
@@ -98,7 +98,7 @@ namespace net_il_mio_fotoalbum.Controllers
 
 
         }
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Create()
         {
             using(AlbumContext ctx = new AlbumContext())
@@ -117,7 +117,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
            
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         public IActionResult Create(FormPhotoCategory form)
         {
@@ -191,7 +191,7 @@ namespace net_il_mio_fotoalbum.Controllers
                
             
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Edit(int id)
         {
             using (AlbumContext ctx = new AlbumContext())
@@ -211,7 +211,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
 
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         public IActionResult Edit(int id,FormPhotoCategory form)
         {
@@ -267,7 +267,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
 
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Delete(int id)
         {
             using(AlbumContext ctx = new AlbumContext())
