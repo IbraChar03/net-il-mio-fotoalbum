@@ -25,9 +25,34 @@
                          alt="Hollywood Sign on The Hill" />
                     <div class="card-body2">
                             <h5 class="card-title text-center mt-2">@photo.Title</h5>
-                        <p class="card-text text-center">
+                            <div class="desc-cn"> 
+                        <p class="card-text text-center elli">
                                 @photo.Description
                         </p>
+                            </div>
+                                @if (User.IsInRole("SuperAdmin"))
+                                {
+                                    
+                                
+                              
+                                    <form asp-controller="Home" asp-action="AdminVisibility" asp-route-id="@photo.Id" method="post" enctype="multipart/form-data" novalidate>
+                                                <div class="d-flex visible-form">
+                                                    <div class="visible-inner">
+                                    <select asp-for="Visibility" class="d-flex w-50 ms-2">
+
+                                        <option value=True>Visible</option>
+                                        <option value=False>Hidden</option>
+
+
+                                    </select>
+                                        <input type="submit" value="Apply" class="btn btn-primary d-flex ml-3">
+                                                    </div>
+                                                </div>
+                                        </form>
+                                  
+                                }
+
+                               
  
                     </div>
                 </div>

@@ -171,6 +171,25 @@ namespace net_il_mio_fotoalbum.Controllers
             }
 
         }
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpPost]
+        public IActionResult AdminVisibility(int id,Filter vis)
+        {
+            if (vis.Visibility == null)
+                return RedirectToAction("Index");
+           
+            
+                using(AlbumContext ctx = new AlbumContext())
+                {
+                  Photo photo = ctx.Photos.Where(p => p.Id == id).FirstOrDefault();
+                    photo.Visible = vis.Visibility;
+                    ctx.Photos.Update(photo);
+                    ctx.SaveChanges(true);
+                return RedirectToAction("Index");
+                }
+               
+            
+        }
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
