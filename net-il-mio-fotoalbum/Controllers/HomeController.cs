@@ -173,9 +173,13 @@ namespace net_il_mio_fotoalbum.Controllers
                 using(AlbumContext ctx = new AlbumContext())
                 {
                   Photo photo = ctx.Photos.Where(p => p.Id == id).FirstOrDefault();
-                    photo.Visible = vis.Visibility;
-                    ctx.Photos.Update(photo);
-                    ctx.SaveChanges(true);
+                if(vis.Visibility == "Visible")
+                 photo.Visible = true;
+                else 
+                 photo.Visible = false;
+                
+                 ctx.Photos.Update(photo);
+                    ctx.SaveChanges();
                 return RedirectToAction("Index");
                 }
                
