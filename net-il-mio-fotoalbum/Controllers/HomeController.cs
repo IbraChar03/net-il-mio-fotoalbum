@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.Models;
 using System.Data;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
@@ -71,17 +72,30 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             return View();
         }
-        [Authorize(Roles ="Admin")]
-        public IActionResult Admin()
+        //[Authorize(Roles ="Admin")]
+        //public IActionResult Admin()
+        //{
+        //    using (AlbumContext ctx = new AlbumContext())
+        //    {
+        //        var photos = ctx.Photos.Include(p => p.ImageEntry).ToList();
+
+        //        return View(photos);
+        //    }
+            
+            
+        //}
+        [Authorize(Roles = "Admin")]
+        public IActionResult Admin(string id)
         {
             using (AlbumContext ctx = new AlbumContext())
             {
-                var photos = ctx.Photos.Include(p => p.ImageEntry).ToList();
+                ApplicationUser user = ctx.ApplicationUsers.Where(a => a.Id == id).FirstOrDefault();
+                var photos = ctx.Photos.Where(p => p.ApplicationUserId == id).Include(p => p.ImageEntry).ToList();
 
                 return View(photos);
             }
-            
-            
+
+
         }
         [Authorize(Roles ="Admin")]
         public IActionResult Create()
@@ -123,10 +137,10 @@ namespace net_il_mio_fotoalbum.Controllers
                     return View(form);
                 }
                 Photo photo = new Photo();
-                photo.Image = form.Photo.Image;
                 photo.Title = form.Photo.Title;
                 photo.Description = form.Photo.Description;
                 photo.Visible = form.Photo.Visible;
+                photo.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 photo.Categories = new List<Category>();
                 foreach(var categoryid in form.SelectedCategories)
                 {
@@ -201,7 +215,6 @@ namespace net_il_mio_fotoalbum.Controllers
                 Photo pt = ctx.Photos.Where(p => p.Id == id).Include(p => p.Categories).FirstOrDefault();
                 pt.Title = form.Photo.Title;
                 pt.Description = form.Photo.Description;
-                pt.Image = form.Photo.Image;
                 pt.Visible = form.Photo.Visible;
                 pt.Categories.Clear();
                 foreach (var categoryid in form.SelectedCategories)

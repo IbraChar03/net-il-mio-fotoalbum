@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+@*@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> userManager*@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,7 +37,8 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Admin">Administrator</a>
+                         @*   <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Admin">Administrator</a>*@
+                            <a href="@Url.Action("Admin", "Home",new{id = User.FindFirstValue(ClaimTypes.NameIdentifier)})" class="nav-link text-dark">Administrator</a>
                         </li>
                     }
                  

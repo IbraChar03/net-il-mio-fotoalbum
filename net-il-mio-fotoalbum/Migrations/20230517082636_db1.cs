@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace net_il_mio_fotoalbum.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateIdentityTables : Migration
+    public partial class db1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,19 +64,30 @@ namespace net_il_mio_fotoalbum.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "photo",
+                name: "ImageEntries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Visible = table.Column<bool>(type: "bit", nullable: false)
+                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_photo", x => x.Id);
+                    table.PrimaryKey("PK_ImageEntries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "message",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_message", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,6 +197,35 @@ namespace net_il_mio_fotoalbum.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "photo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Visible = table.Column<bool>(type: "bit", nullable: true),
+                    ImageEntryId = table.Column<int>(type: "int", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_photo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_photo_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_photo_ImageEntries_ImageEntryId",
+                        column: x => x.ImageEntryId,
+                        principalTable: "ImageEntries",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategoryPhoto",
                 columns: table => new
                 {
@@ -204,27 +244,6 @@ namespace net_il_mio_fotoalbum.Migrations
                     table.ForeignKey(
                         name: "FK_CategoryPhoto_photo_PhotosId",
                         column: x => x.PhotosId,
-                        principalTable: "photo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "message",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhotoId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_message", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_message_photo_PhotoId",
-                        column: x => x.PhotoId,
                         principalTable: "photo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -275,9 +294,14 @@ namespace net_il_mio_fotoalbum.Migrations
                 column: "PhotosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_message_PhotoId",
-                table: "message",
-                column: "PhotoId");
+                name: "IX_photo_ApplicationUserId",
+                table: "photo",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_photo_ImageEntryId",
+                table: "photo",
+                column: "ImageEntryId");
         }
 
         /// <inheritdoc />
@@ -308,13 +332,16 @@ namespace net_il_mio_fotoalbum.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "category");
 
             migrationBuilder.DropTable(
                 name: "photo");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ImageEntries");
         }
     }
 }
