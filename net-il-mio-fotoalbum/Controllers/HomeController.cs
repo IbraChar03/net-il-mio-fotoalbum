@@ -24,10 +24,12 @@ namespace net_il_mio_fotoalbum.Controllers
             using(AlbumContext ctx = new AlbumContext())
             {
                 Filter filt = new Filter();
-
-                var photos = ctx.Photos.Where( p => p.Visible == true).Include(p => p.ImageEntry).ToList();
+                List<Photo> photos = new List<Photo>();
+                if (User.IsInRole("SuperAdmin"))
+                photos = ctx.Photos.Include(p => p.ImageEntry).ToList();
+                else
+                photos = ctx.Photos.Where(p => p.Visible == true).Include(p => p.ImageEntry).ToList();
                 filt.Photos = photos;
-
                 return View(filt);
 
             }
