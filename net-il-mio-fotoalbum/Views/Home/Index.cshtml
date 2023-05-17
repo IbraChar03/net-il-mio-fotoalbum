@@ -1,5 +1,7 @@
 ﻿@model Filter
-
+@{
+    Layout = "_layout";
+}
 <div class="scroll2">
     <div class="filter mb-3 mt-3">
         <div class="con-filt">
@@ -19,50 +21,44 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (var photo in Model.Photos)
             {
-                <div class="col">
+               <div class="col">
                         <a href="@Url.Action("Details", "Home",new{id = photo.Id})" class="text-black text-decoration-none">
-                 <div class="card width-card">
-                        <img src="@photo.ImageEntryBase64" class="img-t"
-                         alt="Hollywood Sign on The Hill" />
-                    <div class="card-body2">
-                            <h5 class="card-title text-center mt-2">@photo.Title</h5>
-                            <div class="desc-cn"> 
-                        <p class="card-text text-center elli">
-                                @photo.Description
-                        </p>
-                            </div>
+                            <img src="@photo.ImageEntryBase64" class="img-t" alt="Hollywood Sign on The Hill" />
+                        </a>
+                            <div class="card-body2">
+                                <h5 class="card-title text-center mt-2">@photo.Title</h5>
+                                <div class="desc-cn">
+                                    <p class="card-text text-center elli">
+                                        @photo.Description
+                                    </p>
+                                </div>
                                 @if (User.IsInRole("SuperAdmin"))
                                 {
-                                    
-                                
-                              
+
+
+
                                     <form asp-controller="Home" asp-action="AdminVisibility" asp-route-id="@photo.Id" method="post" enctype="multipart/form-data" novalidate>
-                                                <div class="d-flex visible-form">
-                                                    <div class="visible-inner">
-                                    <select asp-for="Visibility" class="d-flex w-50 ms-2">
+                                        <div class="d-flex visible-form">
+                                            <div class="visible-inner">
+                                                <select asp-for="Visibility" class="d-flex w-50 ms-2">
 
-                                        <option value=True>Visible</option>
-                                        <option value=False>Hidden</option>
+                                                    <option value=True>Visible</option>
+                                                    <option value=False>Hidden</option>
 
 
-                                    </select>
-                                        <input type="submit" value="Apply" class="btn btn-primary d-flex ml-3">
-                                                    </div>
-                                                </div>
-                                        </form>
-                                  
+                                                </select>
+                                                <input type="submit" value="Apply" class="btn btn-primary d-flex ml-3">
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 }
-
-                               
- 
-                    </div>
-                </div>
-                </a>
-            </div>
+                            </div>
+                        
+               </div>
          
             }
-           
-
+          
             
         </div>
        

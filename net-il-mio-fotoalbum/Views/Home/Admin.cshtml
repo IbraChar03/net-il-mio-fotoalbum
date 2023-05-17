@@ -1,4 +1,7 @@
-﻿@model List<Photo>
+﻿@*@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}*@
+@model List<Photo>
 <div class="scroll">
 <div class="cont-create mb-3">
     <a href="@Url.Action("Create", "Home")" class="btn btn-primary">Create a new Photo</a>
