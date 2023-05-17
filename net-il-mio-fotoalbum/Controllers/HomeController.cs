@@ -37,7 +37,7 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             using (AlbumContext ctx = new AlbumContext())
             {
-                var photo = ctx.Photos.Where(p => p.Id == id).FirstOrDefault();
+                var photo = ctx.Photos.Where(p => p.Id == id).Include(p => p.ImageEntry).FirstOrDefault();
                 return View(photo);
 
             }
@@ -47,9 +47,10 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             using (AlbumContext ctx = new AlbumContext())
             {
-                List<Photo> photos = ctx.Photos.Where(p => p.Title.Contains(data.Value)).ToList();
+                List<Photo> photos = ctx.Photos.Where(p => p.Title.Contains(data.Value) && p.Visible == true).Include(p => p.ImageEntry).ToList();
                 Filter filter = new Filter();
                 filter.Photos = photos;
+                data.Value = "";
                 return View("Index", filter);
 
             }
